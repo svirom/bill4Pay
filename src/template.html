@@ -20,9 +20,11 @@
     <div id="bill4Pay" class="bill4Pay active">
       <div class="bill4Pay-dialog">
         <div id="bill4Pay-close" class="bill4Pay-close"></div>
-        <div class="bill4Pay-currency bill4Pay-row ethereum"></div>
+        <div class="bill4Pay-currency ethereum"></div>
         <div class="bill4Pay-counter bill4Pay-row">
-          <div class="bill4Pay-progress"></div>
+          <div class="bill4Pay-counter__progress">
+            <span></span>
+          </div>
           <div class="bill4Pay-counter__text">Ссылка доступна к оплате</div>
           <div class="bill4Pay-counter__time">
             <span>00</span>:<span>13</span>:<span>43</span>
@@ -33,14 +35,18 @@
         </div>
         <div class="bill4Pay-link bill4Pay-row">
           <div class="bill4Pay-link__value">0x79bdafa7d307b3ac2e62b7a0b0c48a87600257fc</div>
-          <div class="bill4Pay-link__clipboard">Копировать адрес</div>
+          <div class="bill4Pay-link__clipboard">
+            <span>Копировать адрес</span>
+          </div>
         </div>
         <div class="bill4Pay-link bill4Pay-row">
           <div class="bill4Pay-link__value">0.0012236783 ETH</div>
-          <div class="bill4Pay-link__clipboard">Копировать сумму</div>
+          <div class="bill4Pay-link__clipboard">
+            <span>Копировать сумму</span>
+          </div>
         </div>
         <div class="bill4Pay-button">
-          <button type="button">Оплатить кошельком</button>
+          <button type="button" class="bill4Pay-button__pay">Оплатить кошельком</button>
         </div>
       </div>
     </div>

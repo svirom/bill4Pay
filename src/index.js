@@ -1,9 +1,15 @@
 // Test import of a JavaScript module
 // import { example } from '@/js/example'
 import { fontAdd } from '@/js/font-add';
+import { copyToClipboard } from '@/js/clipboard';
 
 // Test import of styles
 import '@/styles/style.css';
+
+// forEach fix for ie11
+if (window.NodeList && !NodeList.prototype.forEach) {
+  NodeList.prototype.forEach = Array.prototype.forEach;
+}
 
 const fontLink = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap';
 
@@ -11,6 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
   fontAdd(fontLink);
 });
 
+
+// document.querySelector('.bill4Pay .bill4Pay-counter__progress span').style.width = '25%';
+
+const clipboards = document.querySelectorAll('.bill4Pay-link__clipboard');
+clipboards.forEach((clipboard) => {
+  clipboard.addEventListener('click', (e) => {
+    copyToClipboard(e.target);
+  });
+})
 
 
 

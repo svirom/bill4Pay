@@ -1,6 +1,6 @@
 # 📦 Bill4Pay
 
-Sensible webpack 5 boilerplate using Babel, PostCSS and Sass.
+Popup App.
 
 ## Author
 
