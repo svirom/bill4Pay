@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+    <title><%= htmlWebpackPlugin.options.title %></title>
+
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"> -->
+  </head>
+
+  <body>
+
+    <button id="app_button">App Button</button>
+
+    <!-- modal image -->
+    <div id="bill4Pay" class="bill4Pay active">
+      <div class="bill4Pay-dialog">
+        <div id="bill4Pay-close" class="bill4Pay-close"></div>
+        <div class="bill4Pay-currency bill4Pay-row ethereum"></div>
+        <div class="bill4Pay-counter bill4Pay-row">
+          <div class="bill4Pay-progress"></div>
+          <div class="bill4Pay-counter__text">Ссылка доступна к оплате</div>
+          <div class="bill4Pay-counter__time">
+            <span>00</span>:<span>13</span>:<span>43</span>
+          </div>
+        </div>
+        <div class="bill4Pay-qr bill4Pay-row">
+          <img src="https://chart.googleapis.com/chart?cht=qr&chl=ethereum:0x79bdafa7d307b3ac2e62b7a0b0c48a87600257fc?amount=0.001418&message=%D0%9F%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5+%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE+%2B380685980460&chs=180x180&choe=UTF-8&chld=L%7C2">
+        </div>
+        <div class="bill4Pay-link bill4Pay-row">
+          <div class="bill4Pay-link__value">0x79bdafa7d307b3ac2e62b7a0b0c48a87600257fc</div>
+          <div class="bill4Pay-link__clipboard">Копировать адрес</div>
+        </div>
+        <div class="bill4Pay-link bill4Pay-row">
+          <div class="bill4Pay-link__value">0.0012236783 ETH</div>
+          <div class="bill4Pay-link__clipboard">Копировать сумму</div>
+        </div>
+        <div class="bill4Pay-button">
+          <button type="button">Оплатить кошельком</button>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
