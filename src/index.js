@@ -2,6 +2,8 @@
 // import { example } from '@/js/example'
 import { fontAdd } from '@/js/font-add';
 import { copyToClipboard } from '@/js/clipboard';
+import { modalAction } from '@/js/modal-action';
+import { getBillData } from '@/js/requests';
 
 // Test import of styles
 import '@/styles/style.css';
@@ -11,6 +13,8 @@ if (window.NodeList && !NodeList.prototype.forEach) {
   NodeList.prototype.forEach = Array.prototype.forEach;
 }
 
+const appButton = document.querySelector('#app_button');
+const guid = appButton.dataset.appGuid;
 const fontLink = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -20,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // document.querySelector('.bill4Pay .bill4Pay-counter__progress span').style.width = '25%';
 
+// copy to clipboard
 const clipboards = document.querySelectorAll('.bill4Pay-link__clipboard');
 clipboards.forEach((clipboard) => {
   clipboard.addEventListener('click', (e) => {
@@ -27,39 +32,31 @@ clipboards.forEach((clipboard) => {
   });
 })
 
-
-
-const appButton = document.querySelector('#app_button');
-
 // modal image open
 appButton.addEventListener('click', function(e) {
   e.preventDefault();
-  let modal = document.querySelector('#bill4Pay');
-
-  modal.classList.add('active');
-  modal.classList.add('modal-open');
-  document.body.classList.add('overflow-hidden');
+  modalAction('#bill4Pay', 'open');
 })
 
 // modal image close button
 document.querySelector('#bill4Pay-close').addEventListener('click', function(e) {
   e.preventDefault();
-  const modal = document.querySelector('#bill4Pay');
-
-  modal.classList.remove('active');
-  modal.classList.remove('modal-open');
-  document.body.classList.remove('overflow-hidden');
+  modalAction('#bill4Pay', 'close');
 })
 
 // modal image close outside
 document.body.addEventListener('click', function(e) {
-  const modal = document.querySelector('#bill4Pay');
-  const matchesModal = e.target.matches('#bill4Pay');
-
-  if ( matchesModal && !e.target.parentElement.classList.contains('.bill4Pay-dialog') ) {
-    modal.classList.remove('active');
-    modal.classList.remove('modal-open');
-    document.body.classList.remove('overflow-hidden');
-  }
+  modalAction('#bill4Pay', 'closeOutside', e);
 })
+
+const getData = async () => {
+  const data = await getBillData(guid);
+  
+  if (data) {
+    console.log(`Data: `, data);
+  }
+  return data;
+}
+
+getData();
 
