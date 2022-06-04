@@ -1,5 +1,5 @@
 const modalAction = (id, action, e) => {
-  const modal = document.querySelector(id);
+  const modal = document.querySelector(`#${id}`);
 
   if (action === 'open') {
     modal.classList.add('active');
@@ -14,7 +14,7 @@ const modalAction = (id, action, e) => {
   }
 
   if (action === 'closeOutside') {
-    const matchesModal = e.target.matches(id);
+    const matchesModal = e.target.matches(`#${id}`);
 
     if ( matchesModal && !e.target.parentElement.classList.contains('.bill4Pay-dialog') ) {
       modal.classList.remove('active');
