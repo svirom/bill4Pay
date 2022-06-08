@@ -100,13 +100,18 @@
 .bill4Pay .bill4Pay-link__value {
   margin-bottom: 13px;
   padding: 10px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.167;
   font-weight: 700;
   color: #000000;
   word-break: break-all;
   border-radius: 2px;
   background-color: #EDEDED;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.bill4Pay .bill4Pay-link__value.copied {
+  background-color: #b7b7b7;
 }
 
 .bill4Pay .bill4Pay-link__clipboard span {

@@ -1,10 +1,15 @@
-const renderModal = (id, data) => {
-  console.log(`Address: ${data.address}`);
-  console.log(`Amount: ${data.amount}`);
-  console.log(`Currency ISO: ${data.currency_iso}`);
-  console.log(`QR Link: ${data.qr_link}`);
-  console.log(`Deadline at: ${data.deadline_at}`);
-  console.log(`Paid at: ${data.paid_at}`);
+import { chooseLang } from '@/js/lang';
+
+const renderModal = (id, currency, lang, data) => {
+  // console.log(`Address: ${data.address}`);
+  // console.log(`Amount: ${data.amount}`);
+  // console.log(`Currency ISO: ${data.currency_iso}`);
+  // console.log(`QR Link: ${data.qr_link}`);
+  // console.log(`Deadline at: ${data.deadline_at}`);
+  // console.log(`Paid at: ${data.paid_at}`);
+  // console.log(`Currency: ${currency}`);
+
+  chooseLang[lang] ? lang : lang = 'en-US';
 
   const modalContainer = document.createElement('div');
   const modalDialog = document.createElement('div');
@@ -18,6 +23,9 @@ const renderModal = (id, data) => {
   const modalCounterProgressSpan = document.createElement('span');
   const modalCounterText = document.createElement('div');
   const modalCounterTime = document.createElement('div');
+  const modalCounterHours = document.createElement('span');
+  const modalCounterMinutes = document.createElement('span');
+  const modalCounterSeconds = document.createElement('span');
 
   const modalQr = document.createElement('div');
   const modalQrImg = document.createElement('img');
@@ -48,7 +56,7 @@ const renderModal = (id, data) => {
   modalDialog.appendChild(modalClose);
 
   // currency
-  modalCurrency.classList.add('bill4Pay-currency', 'ethereum');
+  modalCurrency.classList.add('bill4Pay-currency', currency);
   modalDialog.appendChild(modalCurrency);
 
   // counter
@@ -56,8 +64,19 @@ const renderModal = (id, data) => {
   modalCounterProgress.classList.add('bill4Pay-counter__progress');
   modalCounterProgress.appendChild(modalCounterProgressSpan);
   modalCounterText.classList.add('bill4Pay-counter__text');
-  modalCounterText.textContent = 'Ссылка доступна к оплате';
+  modalCounterText.textContent = chooseLang[lang].text;
   modalCounterTime.classList.add('bill4Pay-counter__time');
+  modalCounterHours.classList.add('bill4Pay-counter__hours');
+  modalCounterHours.textContent = '00';
+  modalCounterTime.appendChild(modalCounterHours);
+  modalCounterTime.append(':');
+  modalCounterMinutes.classList.add('bill4Pay-counter__minutes');
+  modalCounterMinutes.textContent = '00';
+  modalCounterTime.appendChild(modalCounterMinutes);
+  modalCounterTime.append(':');
+  modalCounterSeconds.classList.add('bill4Pay-counter__seconds');
+  modalCounterSeconds.textContent = '00';
+  modalCounterTime.appendChild(modalCounterSeconds);
   modalCounter.appendChild(modalCounterProgress);
   modalCounter.appendChild(modalCounterText);
   modalCounter.appendChild(modalCounterTime);
@@ -74,7 +93,7 @@ const renderModal = (id, data) => {
   modalAddressValue.classList.add('bill4Pay-link__value');
   modalAddressValue.textContent = data.address;
   modalAddressCopy.classList.add('bill4Pay-link__clipboard');
-  modalAddressCopySpan.textContent = 'Копировать адрес';
+  modalAddressCopySpan.textContent = chooseLang[lang].address;
   modalAddressCopy.appendChild(modalAddressCopySpan);
   modalAddress.appendChild(modalAddressValue);
   modalAddress.appendChild(modalAddressCopy);
@@ -85,7 +104,7 @@ const renderModal = (id, data) => {
   modalAmountValue.classList.add('bill4Pay-link__value');
   modalAmountValue.textContent = data.amount;
   modalAmountCopy.classList.add('bill4Pay-link__clipboard');
-  modalAmountCopySpan.textContent = 'Копировать сумму';
+  modalAmountCopySpan.textContent = chooseLang[lang].amount;
   modalAmountCopy.appendChild(modalAmountCopySpan);
   modalAmount.appendChild(modalAmountValue);
   modalAmount.appendChild(modalAmountCopy);
@@ -95,7 +114,7 @@ const renderModal = (id, data) => {
   modalButtonContainer.classList.add('bill4Pay-button');
   modalButton.type = 'button'; 
   modalButton.classList.add('bill4Pay-button__pay');
-  modalButton.textContent = 'Оплатить кошельком';
+  modalButton.textContent = chooseLang[lang].pay;
   modalButtonContainer.appendChild(modalButton);
   modalDialog.appendChild(modalButtonContainer); 
 }
