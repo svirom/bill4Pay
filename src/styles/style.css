@@ -76,7 +76,7 @@
   content: '';
   top: 0;
   left: 0;
-  width: 50%;
+  /* width: 50%; */
   height: 100%;
   background-color: #FD5353;
 }
@@ -88,6 +88,10 @@
   line-height: 1.2;
   font-weight: 400;
   color: #000000;
+}
+
+.bill4Pay .bill4Pay-counter__text.expired {
+  color: #F64740;
 }
 
 .bill4Pay .bill4Pay-counter__time {

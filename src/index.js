@@ -30,7 +30,7 @@ const getData = async () => {
   
   if (data) {
     renderModal(appModalId, currency, lang, data);
-    getTimer(data);
+    getTimer(lang, data);
 
     clipboards = document.querySelectorAll('.bill4Pay-link__clipboard');
 
@@ -66,9 +66,3 @@ getData();
 document.addEventListener('DOMContentLoaded', () => {
   fontAdd(fontLink);
 });
-
-
-// document.querySelector('.bill4Pay .bill4Pay-counter__progress span').style.width = '25%';
-
-
-

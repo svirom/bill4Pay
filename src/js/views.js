@@ -1,4 +1,5 @@
 import { chooseLang } from '@/js/lang';
+import { getInitialTimer } from '@/js/timer';
 
 const renderModal = (id, currency, lang, data) => {
   // console.log(`Address: ${data.address}`);
@@ -8,6 +9,8 @@ const renderModal = (id, currency, lang, data) => {
   // console.log(`Deadline at: ${data.deadline_at}`);
   // console.log(`Paid at: ${data.paid_at}`);
   // console.log(`Currency: ${currency}`);
+
+  const [initialHours, initialMinutes, initialSeconds, initialProgress] = getInitialTimer(data);
 
   chooseLang[lang] ? lang : lang = 'en-US';
 
@@ -62,20 +65,22 @@ const renderModal = (id, currency, lang, data) => {
   // counter
   modalCounter.classList.add('bill4Pay-counter', 'bill4Pay-row');
   modalCounterProgress.classList.add('bill4Pay-counter__progress');
+  modalCounterProgressSpan.style.width = `${initialProgress}%`;
   modalCounterProgress.appendChild(modalCounterProgressSpan);
   modalCounterText.classList.add('bill4Pay-counter__text');
-  modalCounterText.textContent = chooseLang[lang].text;
+  (initialProgress <= 0) ? modalCounterText.classList.add('expired') : '';
+  modalCounterText.textContent = (initialProgress > 0) ? chooseLang[lang].text : chooseLang[lang].textExpired;
   modalCounterTime.classList.add('bill4Pay-counter__time');
   modalCounterHours.classList.add('bill4Pay-counter__hours');
-  modalCounterHours.textContent = '00';
+  modalCounterHours.textContent = initialHours;
   modalCounterTime.appendChild(modalCounterHours);
   modalCounterTime.append(':');
   modalCounterMinutes.classList.add('bill4Pay-counter__minutes');
-  modalCounterMinutes.textContent = '00';
+  modalCounterMinutes.textContent = initialMinutes;
   modalCounterTime.appendChild(modalCounterMinutes);
   modalCounterTime.append(':');
   modalCounterSeconds.classList.add('bill4Pay-counter__seconds');
-  modalCounterSeconds.textContent = '00';
+  modalCounterSeconds.textContent = initialSeconds;
   modalCounterTime.appendChild(modalCounterSeconds);
   modalCounter.appendChild(modalCounterProgress);
   modalCounter.appendChild(modalCounterText);
@@ -102,7 +107,7 @@ const renderModal = (id, currency, lang, data) => {
   // amount
   modalAmount.classList.add('bill4Pay-link', 'bill4Pay-row');
   modalAmountValue.classList.add('bill4Pay-link__value');
-  modalAmountValue.textContent = data.amount;
+  modalAmountValue.textContent = `${data.amount} ${data.currency_iso}`;
   modalAmountCopy.classList.add('bill4Pay-link__clipboard');
   modalAmountCopySpan.textContent = chooseLang[lang].amount;
   modalAmountCopy.appendChild(modalAmountCopySpan);
