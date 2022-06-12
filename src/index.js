@@ -3,7 +3,7 @@ import { fontAdd } from '@/js/font-add';
 import { copyToClipboard } from '@/js/clipboard';
 import { modalAction } from '@/js/modal-action';
 import { getBillData } from '@/js/requests';
-import { renderModal } from '@/js/views';
+import { renderModal, renderModalSuccess } from '@/js/views';
 import { getTimer } from '@/js/timer';
 
 // Test import of styles
@@ -19,7 +19,7 @@ const guid = appButton.dataset.appGuid;
 const currency = appButton.dataset.appCurrency;
 const lang = appButton.dataset.appLang;
 const fontLink = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap';
-const appModalId = 'bill4Pay';
+const appModalId = `bill4Pay-${currency}`;
 
 let clipboards;
 
@@ -30,9 +30,11 @@ const getData = async () => {
   
   if (data) {
     renderModal(appModalId, currency, lang, data);
-    getTimer(lang, data);
+    getTimer(appModalId, lang, data);
 
-    clipboards = document.querySelectorAll('.bill4Pay-link__clipboard');
+    const modal = document.querySelector(`#${appModalId}`);
+
+    clipboards = modal.querySelectorAll('.bill4Pay-link__clipboard');
 
     // copy to clipboard
     clipboards.forEach((clipboard) => {
@@ -51,11 +53,39 @@ const getData = async () => {
     document.body.addEventListener('click', (e) => {
       modalAction(appModalId, 'closeOutside', e);
 
-      if (e.target.id === 'bill4Pay-close') {
+      if ( (e.target.id === 'bill4Pay-close') || (e.target.classList.contains('bill4Pay-button__close')) ) {
         e.preventDefault();
         modalAction(appModalId, 'close');
       }
     })
+
+    
+
+    let i = 0;
+
+    const checkBill = async () => {
+      const checkData = await getBillData(guid, currency);
+      i++;
+      console.log('yes', checkData.paid_at, i);
+      return checkData;
+    }
+
+    let checkInterval = setInterval(() => {
+      const getData = checkBill();
+
+      getData.then((result) => {        
+
+        // if (result.paid_at) {
+        //   clearInterval(checkInterval);
+        //   renderModalSuccess(appModalId, currency, lang, data);
+        // }
+
+        if (i === 2) {
+          clearInterval(checkInterval);
+          renderModalSuccess(appModalId, currency, lang, data);
+        }
+      });
+    }, 5000);
 
   }
 }

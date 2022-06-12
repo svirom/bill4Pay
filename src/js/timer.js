@@ -1,8 +1,10 @@
 import { chooseLang } from '@/js/lang';
 
-const getTimer = (lang, data) => {
+const getTimer = (id, lang, data) => {
   
   const timer = setInterval(() => {
+    const modal = document.querySelector(`#${id}`);
+
     // const timeCreated = data.created_at;
     // const timeDeadline = data.deadline_at;
     const timeCreated =		1654797175;
@@ -11,17 +13,17 @@ const getTimer = (lang, data) => {
     let timeRemains = timeDeadline - timeNow;
 
     const progressFull = timeDeadline - timeCreated;
-    const progressCurrent = document.querySelector('.bill4Pay-counter__progress span');
+    const progressCurrent = modal.querySelector('.bill4Pay-counter__progress span');
     let progressWidth = (timeRemains * 100) / progressFull;
 
-    let hours = document.querySelector('.bill4Pay-counter__hours');
-    let minutes = document.querySelector('.bill4Pay-counter__minutes');
-    let seconds = document.querySelector('.bill4Pay-counter__seconds');
+    let hours = modal.querySelector('.bill4Pay-counter__hours');
+    let minutes = modal.querySelector('.bill4Pay-counter__minutes');
+    let seconds = modal.querySelector('.bill4Pay-counter__seconds');
 
     if (timeRemains < 0) {
       clearInterval(timer);
 
-      const counterText = document.querySelector('.bill4Pay-counter__text');
+      const counterText = modal.querySelector('.bill4Pay-counter__text');
 
       chooseLang[lang] ? lang : lang = 'en-US';
 

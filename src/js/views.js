@@ -124,4 +124,68 @@ const renderModal = (id, currency, lang, data) => {
   modalDialog.appendChild(modalButtonContainer); 
 }
 
-export { renderModal };
+const renderModalSuccess = (id, currency, lang, data) => {
+
+  chooseLang[lang] ? lang : lang = 'en-US';
+
+  // const modalContainer = document.createElement('div');
+  // const modalDialog = document.createElement('div');
+
+  const isModal = document.querySelector(`#${id}`);
+
+  let modalContainer;
+  let modalDialog;
+  // modalDialog.innerHTML = '';
+
+  if (isModal) {
+    modalContainer = document.querySelector(`#${id}`);
+    modalDialog = modalContainer.querySelector('.bill4Pay-dialog');
+    modalDialog.innerHTML = '';
+  } else {
+    modalContainer = document.createElement('div');
+    modalContainer.id = id;
+    modalContainer.classList.add('bill4Pay');
+    document.body.appendChild(modalContainer);
+    modalDialog = document.createElement('div');
+    modalDialog.classList.add('bill4Pay-dialog');
+    modalContainer.appendChild(modalDialog);
+  }
+
+  const modalClose = document.createElement('div');
+
+  const modalCurrency = document.createElement('div');
+
+  const modalSuccess = document.createElement('div');
+  const modalSuccessTitle = document.createElement('h3');
+  const modalSuccessP = document.createElement('p');
+
+  const modalButtonContainer = document.createElement('div');
+  const modalButton = document.createElement('button');
+
+  // // close button
+  modalClose.id = 'bill4Pay-close';
+  modalClose.classList.add('bill4Pay-close');
+  modalDialog.appendChild(modalClose);
+
+  // // currency
+  modalCurrency.classList.add('bill4Pay-currency', currency);
+  modalDialog.appendChild(modalCurrency);
+
+  // success
+  modalSuccess.classList.add('bill4Pay-success');
+  modalSuccessTitle.textContent = chooseLang[lang].successTitle;
+  modalSuccessP.textContent = chooseLang[lang].successText;
+  modalSuccess.appendChild(modalSuccessTitle);
+  modalSuccess.appendChild(modalSuccessP);
+  modalDialog.appendChild(modalSuccess);
+
+  // button
+  modalButtonContainer.classList.add('bill4Pay-button');
+  modalButton.type = 'button'; 
+  modalButton.classList.add('bill4Pay-button__pay', 'bill4Pay-button__close');
+  modalButton.textContent = chooseLang[lang].closeButton;
+  modalButtonContainer.appendChild(modalButton);
+  modalDialog.appendChild(modalButtonContainer); 
+}
+
+export { renderModal, renderModalSuccess };
