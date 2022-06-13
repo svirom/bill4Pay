@@ -29,7 +29,7 @@ const getData = async () => {
   const data = await getBillData(guid, currency);
   
   if (data) {
-    renderModal(appModalId, currency, lang, data);
+    data.paid_at ? renderModalSuccess(appModalId, currency, lang, data) : renderModal(appModalId, currency, lang, data);
     getTimer(appModalId, lang, data);
 
     const modal = document.querySelector(`#${appModalId}`);
