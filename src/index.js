@@ -61,14 +61,12 @@ const getData = async () => {
       }
     })
 
-    
-
     let i = 0;
 
     const checkBill = async () => {
       const checkData = await getBillData(guid, currency);
       i++;
-      console.log('yes', checkData.paid_at, i);
+      // console.log('yes', checkData.paid_at, i);
       return checkData;
     }
 
@@ -77,15 +75,15 @@ const getData = async () => {
 
       getData.then((result) => {        
 
-        // if (result.paid_at) {
-        //   clearInterval(checkInterval);
-        //   renderModalSuccess(appModalId, currency, lang, data);
-        // }
+        if (result.paid_at) {
+          clearInterval(checkInterval);
+          renderModalSuccess(appModalId, currency, lang, data);
+        }
 
-        // if (i === 2) {
-        //   clearInterval(checkInterval);
-        //   renderModalSuccess(appModalId, currency, lang, data);
-        // }
+        if (i === 2) {
+          clearInterval(checkInterval);
+          renderModalSuccess(appModalId, currency, lang, data);
+        }
       });
     }, 5000);
 

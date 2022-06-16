@@ -24,8 +24,8 @@ module.exports = {
     // new CopyWebpackPlugin({
     //   patterns: [
     //     {
-    //       from: paths.public,
-    //       to: 'assets',
+    //       from: paths.src + '/img',
+    //       to: 'img',
     //       globOptions: {
     //         ignore: ['*.DS_Store'],
     //       },
@@ -52,10 +52,17 @@ module.exports = {
       { test: /\.js$/, use: ['babel-loader'] },
 
       // Images: Copy image files to build folder
-      { test: /\.(?:ico|gif|png|jpg|jpeg)$/i, type: 'asset/resource' },
+      // { test: /\.(?:ico|gif|png|jpg|jpeg)$/i, type: 'asset/resource' },
 
       // Fonts and SVGs: Inline files
-      { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: 'asset/inline' },
+      // { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: 'asset/inline' },
+      { 
+        test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/, 
+        type: 'asset/resource',
+        generator: {
+          filename: 'img/[name].[ext]'
+        },
+      },
     ],
   },
 

@@ -5,10 +5,10 @@ const getTimer = (id, lang, data) => {
   const timer = setInterval(() => {
     const modal = document.querySelector(`#${id}`);
 
-    // const timeCreated = data.created_at;
-    // const timeDeadline = data.deadline_at;
-    const timeCreated =		1654797175;
-    const timeDeadline = 		1654797595;
+    const timeCreated = data.created_at;
+    const timeDeadline = data.deadline_at;
+    // const timeCreated =		1654797175;
+    // const timeDeadline = 		1654797595;
     const timeNow = Math.floor(Date.now() / 1000);
     let timeRemains = timeDeadline - timeNow;
 
@@ -58,10 +58,10 @@ const getTimer = (id, lang, data) => {
 };
 
 const getInitialTimer = (data) => {
-  // const timeCreated = data.created_at;
-  // const timeDeadline = data.deadline_at;
-  const timeCreated = 1654797175;
-  const timeDeadline = 1654797595;
+  const timeCreated = data.created_at;
+  const timeDeadline = data.deadline_at;
+  // const timeCreated = 1654797175;
+  // const timeDeadline = 1654797595;
   const timeNow = Math.floor(Date.now() / 1000);
   let timeRemains = timeDeadline - timeNow;
   let hoursRemain = Math.floor(timeRemains / 3600);

@@ -161,6 +161,9 @@ const renderModalSuccess = (id, currency, lang, data) => {
   const modalButtonContainer = document.createElement('div');
   const modalButton = document.createElement('button');
 
+  // modal dialog
+  modalDialog.classList.add('bill4Pay-dialog-success');
+
   // // close button
   modalClose.id = `bill4Pay-${currency}-close`;
   modalClose.classList.add('bill4Pay-close');

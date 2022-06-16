@@ -40,6 +40,17 @@ module.exports = merge(common, {
           'sass-loader',
         ],
       },
+      // {
+      //   test: /\.(png|jpe?g|gif|svg)$/i,
+      //   use: [
+      //     {
+      //       loader: 'file-loader',
+      //       options: {
+      //         name: 'img/[name].[ext]',
+      //       },
+      //     },
+      //   ],
+      // },
     ],
   },
   plugins: [
@@ -51,7 +62,7 @@ module.exports = merge(common, {
   ],
   optimization: {
     minimize: true,
-    minimizer: [new CssMinimizerPlugin(), '...'],
+    // minimizer: [new CssMinimizerPlugin(), '...'],
     runtimeChunk: {
       name: 'runtime',
     },
