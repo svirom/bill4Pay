@@ -1,15 +1,15 @@
 import { chooseLang } from '@/js/lang';
 import { getInitialTimer } from '@/js/timer';
 
-const renderModal = (id, currency, lang, data) => {
-  // console.log(`Address: ${data.address}`);
-  // console.log(`Amount: ${data.amount}`);
-  // console.log(`Currency ISO: ${data.currency_iso}`);
-  // console.log(`QR Link: ${data.qr_link}`);
-  // console.log(`Deadline at: ${data.deadline_at}`);
-  // console.log(`Paid at: ${data.paid_at}`);
-  // console.log(`Currency: ${currency}`);
+const renderButton = (button, currency) => {
+  const buttonInner = document.createElement('span');
 
+  button.classList.add('bill4PayButton', `bill4PayButton-${currency}`);
+  buttonInner.textContent = currency;
+  button.appendChild(buttonInner);
+}
+
+const renderModal = (id, currency, lang, data) => {
   const [initialHours, initialMinutes, initialSeconds, initialProgress] = getInitialTimer(data);
 
   chooseLang[lang] ? lang : lang = 'en-US';
@@ -44,7 +44,8 @@ const renderModal = (id, currency, lang, data) => {
   const modalAmountCopySpan = document.createElement('span');
 
   const modalButtonContainer = document.createElement('div');
-  const modalButton = document.createElement('button');
+  // const modalButton = document.createElement('button');
+  const modalButton = document.createElement('a');
 
   modalContainer.id = id;
   modalContainer.classList.add('bill4Pay');
@@ -54,7 +55,7 @@ const renderModal = (id, currency, lang, data) => {
   modalContainer.appendChild(modalDialog);
 
   // close button
-  modalClose.id = 'bill4Pay-close';
+  modalClose.id = `bill4Pay-${currency}-close`;
   modalClose.classList.add('bill4Pay-close');
   modalDialog.appendChild(modalClose);
 
@@ -117,7 +118,9 @@ const renderModal = (id, currency, lang, data) => {
 
   // button
   modalButtonContainer.classList.add('bill4Pay-button');
-  modalButton.type = 'button'; 
+  // modalButton.type = 'button'; 
+  modalButton.href = '#'; 
+  modalButton.target = '_blank';
   modalButton.classList.add('bill4Pay-button__pay');
   modalButton.textContent = chooseLang[lang].pay;
   modalButtonContainer.appendChild(modalButton);
@@ -128,14 +131,10 @@ const renderModalSuccess = (id, currency, lang, data) => {
 
   chooseLang[lang] ? lang : lang = 'en-US';
 
-  // const modalContainer = document.createElement('div');
-  // const modalDialog = document.createElement('div');
-
   const isModal = document.querySelector(`#${id}`);
 
   let modalContainer;
   let modalDialog;
-  // modalDialog.innerHTML = '';
 
   if (isModal) {
     modalContainer = document.querySelector(`#${id}`);
@@ -163,7 +162,7 @@ const renderModalSuccess = (id, currency, lang, data) => {
   const modalButton = document.createElement('button');
 
   // // close button
-  modalClose.id = 'bill4Pay-close';
+  modalClose.id = `bill4Pay-${currency}-close`;
   modalClose.classList.add('bill4Pay-close');
   modalDialog.appendChild(modalClose);
 
@@ -188,4 +187,4 @@ const renderModalSuccess = (id, currency, lang, data) => {
   modalDialog.appendChild(modalButtonContainer); 
 }
 
-export { renderModal, renderModalSuccess };
+export { renderButton, renderModal, renderModalSuccess };

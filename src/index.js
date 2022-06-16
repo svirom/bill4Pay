@@ -1,9 +1,9 @@
-import { chooseLang } from '@/js/lang';
+// import { chooseLang } from '@/js/lang';
 import { fontAdd } from '@/js/font-add';
 import { copyToClipboard } from '@/js/clipboard';
 import { modalAction } from '@/js/modal-action';
 import { getBillData } from '@/js/requests';
-import { renderModal, renderModalSuccess } from '@/js/views';
+import { renderButton, renderModal, renderModalSuccess } from '@/js/views';
 import { getTimer } from '@/js/timer';
 
 // Test import of styles
@@ -14,7 +14,7 @@ if (window.NodeList && !NodeList.prototype.forEach) {
   NodeList.prototype.forEach = Array.prototype.forEach;
 }
 
-const appButton = document.querySelector('#app_button');
+const appButton = document.querySelector('#bill4PayButtonBitcoin');
 const guid = appButton.dataset.appGuid;
 const currency = appButton.dataset.appCurrency;
 const lang = appButton.dataset.appLang;
@@ -23,7 +23,9 @@ const appModalId = `bill4Pay-${currency}`;
 
 let clipboards;
 
-chooseLang[lang] ? appButton.textContent = chooseLang[lang].button : appButton.textContent = chooseLang['en-US'].button;
+// chooseLang[lang] ? appButton.textContent = chooseLang[lang].button : appButton.textContent = chooseLang['en-US'].button;
+
+renderButton(appButton, currency);
 
 const getData = async () => {
   const data = await getBillData(guid, currency);
@@ -53,7 +55,7 @@ const getData = async () => {
     document.body.addEventListener('click', (e) => {
       modalAction(appModalId, 'closeOutside', e);
 
-      if ( (e.target.id === 'bill4Pay-close') || (e.target.classList.contains('bill4Pay-button__close')) ) {
+      if ( (e.target.id === `bill4Pay-${currency}-close`) || (e.target.classList.contains('bill4Pay-button__close')) ) {
         e.preventDefault();
         modalAction(appModalId, 'close');
       }
@@ -80,10 +82,10 @@ const getData = async () => {
         //   renderModalSuccess(appModalId, currency, lang, data);
         // }
 
-        if (i === 2) {
-          clearInterval(checkInterval);
-          renderModalSuccess(appModalId, currency, lang, data);
-        }
+        // if (i === 2) {
+        //   clearInterval(checkInterval);
+        //   renderModalSuccess(appModalId, currency, lang, data);
+        // }
       });
     }, 5000);
 

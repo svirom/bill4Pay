@@ -1,3 +1,39 @@
+.bill4PayButton {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  /* width: 100%; */
+  min-width: 200px;
+  padding: 12px;
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  text-transform: capitalize;
+  border: 0;
+  border-radius: 8px;
+  background-color: #000000;
+  cursor: pointer;
+}
+
+.bill4PayButton:hover {
+  background-color: #3c4043;
+}
+
+.bill4PayButton span {
+  display: inline-block;
+  height: 32px;
+  padding-left: 40px;
+}
+
+.bill4PayButton-bitcoin span,
+.bill4PayButton-ethereum span {
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 32px;
+}
+
 .bill4Pay * {
   box-sizing: border-box;
 }
@@ -56,11 +92,13 @@
   background-repeat: no-repeat;
 }
 
-.bill4Pay .bill4Pay-currency.ethereum {
+.bill4Pay .bill4Pay-currency.ethereum,
+.bill4PayButton-ethereum span {
   background-image: url("../images/ethereum.svg");
 }
 
-.bill4Pay .bill4Pay-currency.bitcoin {
+.bill4Pay .bill4Pay-currency.bitcoin,
+.bill4PayButton-bitcoin span {
   background-image: url("../images/bitcoin.svg");
 }
 
@@ -182,15 +220,13 @@
   overflow: hidden;
 }
 
-@-webkit-keyframes fadeIn{
-  to{opacity:1}
+@-webkit-keyframes fadeIn {
+  to { 
+    opacity: 1;
+  }
 }
-@keyframes fadeIn{
-  to{opacity:1}
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
-/* @-webkit-keyframes fadeOut{
-  to{opacity:0}
-}
-@keyframes fadeOut{
-  to{opacity:0}
-} */
