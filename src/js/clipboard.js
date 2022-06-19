@@ -1,6 +1,6 @@
 const copyToClipboard = (button) => {
   const currentLink = button.closest('.bill4Pay-link');
-  const currentAmount = currentLink.querySelector('.bill4Pay-link__value').innerText; 
+  const currentAmount = currentLink.querySelector('.bill4Pay-link__value span').innerText; 
   if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
     currentLink.querySelector('.bill4Pay-link__value').classList.add('copied');
 

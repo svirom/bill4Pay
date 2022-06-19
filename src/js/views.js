@@ -35,11 +35,13 @@ const renderModal = (id, currency, lang, data) => {
 
   const modalAddress = document.createElement('div');
   const modalAddressValue = document.createElement('div');
+  const modalAddressValueSpan = document.createElement('span');
   const modalAddressCopy = document.createElement('div');
   const modalAddressCopySpan = document.createElement('span');
 
   const modalAmount = document.createElement('div');
   const modalAmountValue = document.createElement('div');
+  const modalAmountValueSpan = document.createElement('span');
   const modalAmountCopy = document.createElement('div');
   const modalAmountCopySpan = document.createElement('span');
 
@@ -97,7 +99,8 @@ const renderModal = (id, currency, lang, data) => {
   // address
   modalAddress.classList.add('bill4Pay-link', 'bill4Pay-row');
   modalAddressValue.classList.add('bill4Pay-link__value');
-  modalAddressValue.textContent = data.address;
+  modalAddressValueSpan.textContent = data.address;
+  modalAddressValue.appendChild(modalAddressValueSpan);
   modalAddressCopy.classList.add('bill4Pay-link__clipboard');
   modalAddressCopySpan.textContent = chooseLang[lang].address;
   modalAddressCopy.appendChild(modalAddressCopySpan);
@@ -108,7 +111,8 @@ const renderModal = (id, currency, lang, data) => {
   // amount
   modalAmount.classList.add('bill4Pay-link', 'bill4Pay-row');
   modalAmountValue.classList.add('bill4Pay-link__value');
-  modalAmountValue.textContent = `${data.amount} ${data.currency_iso}`;
+  modalAmountValueSpan.textContent = parseFloat(data.amount) + parseFloat(data.fee_external);
+  modalAmountValue.append(modalAmountValueSpan, ' ', data.currency_iso);
   modalAmountCopy.classList.add('bill4Pay-link__clipboard');
   modalAmountCopySpan.textContent = chooseLang[lang].amount;
   modalAmountCopy.appendChild(modalAmountCopySpan);
@@ -119,7 +123,7 @@ const renderModal = (id, currency, lang, data) => {
   // button
   modalButtonContainer.classList.add('bill4Pay-button');
   // modalButton.type = 'button'; 
-  modalButton.href = '#'; 
+  modalButton.href = encodeURI(`${currency}:${data.address}?amount=${data.amount}&label=${data.service_name}&message=${data.desc}`); 
   modalButton.target = '_blank';
   modalButton.classList.add('bill4Pay-button__pay');
   modalButton.textContent = chooseLang[lang].pay;
@@ -128,66 +132,71 @@ const renderModal = (id, currency, lang, data) => {
 }
 
 const renderModalSuccess = (id, currency, lang, data) => {
-
-  chooseLang[lang] ? lang : lang = 'en-US';
-
-  const isModal = document.querySelector(`#${id}`);
-
-  let modalContainer;
-  let modalDialog;
-
-  if (isModal) {
-    modalContainer = document.querySelector(`#${id}`);
-    modalDialog = modalContainer.querySelector('.bill4Pay-dialog');
-    modalDialog.innerHTML = '';
+  if (data.success_url) { 
+    location = data.success_url ;
+  } else if (data.unsuccess_url) {
+    location = data.unsuccess_url;
   } else {
-    modalContainer = document.createElement('div');
-    modalContainer.id = id;
-    modalContainer.classList.add('bill4Pay');
-    document.body.appendChild(modalContainer);
-    modalDialog = document.createElement('div');
-    modalDialog.classList.add('bill4Pay-dialog');
-    modalContainer.appendChild(modalDialog);
-  }
+    chooseLang[lang] ? lang : lang = 'en-US';
 
-  const modalClose = document.createElement('div');
-
-  const modalCurrency = document.createElement('div');
-
-  const modalSuccess = document.createElement('div');
-  const modalSuccessTitle = document.createElement('h3');
-  const modalSuccessP = document.createElement('p');
-
-  const modalButtonContainer = document.createElement('div');
-  const modalButton = document.createElement('button');
-
-  // modal dialog
-  modalDialog.classList.add('bill4Pay-dialog-success');
-
-  // // close button
-  modalClose.id = `bill4Pay-${currency}-close`;
-  modalClose.classList.add('bill4Pay-close');
-  modalDialog.appendChild(modalClose);
-
-  // // currency
-  modalCurrency.classList.add('bill4Pay-currency', currency);
-  modalDialog.appendChild(modalCurrency);
-
-  // success
-  modalSuccess.classList.add('bill4Pay-success');
-  modalSuccessTitle.textContent = chooseLang[lang].successTitle;
-  modalSuccessP.textContent = chooseLang[lang].successText;
-  modalSuccess.appendChild(modalSuccessTitle);
-  modalSuccess.appendChild(modalSuccessP);
-  modalDialog.appendChild(modalSuccess);
-
-  // button
-  modalButtonContainer.classList.add('bill4Pay-button');
-  modalButton.type = 'button'; 
-  modalButton.classList.add('bill4Pay-button__pay', 'bill4Pay-button__close');
-  modalButton.textContent = chooseLang[lang].closeButton;
-  modalButtonContainer.appendChild(modalButton);
-  modalDialog.appendChild(modalButtonContainer); 
+    const isModal = document.querySelector(`#${id}`);
+  
+    let modalContainer;
+    let modalDialog;
+  
+    if (isModal) {
+      modalContainer = document.querySelector(`#${id}`);
+      modalDialog = modalContainer.querySelector('.bill4Pay-dialog');
+      modalDialog.innerHTML = '';
+    } else {
+      modalContainer = document.createElement('div');
+      modalContainer.id = id;
+      modalContainer.classList.add('bill4Pay');
+      document.body.appendChild(modalContainer);
+      modalDialog = document.createElement('div');
+      modalDialog.classList.add('bill4Pay-dialog');
+      modalContainer.appendChild(modalDialog);
+    }
+  
+    const modalClose = document.createElement('div');
+  
+    const modalCurrency = document.createElement('div');
+  
+    const modalSuccess = document.createElement('div');
+    const modalSuccessTitle = document.createElement('h3');
+    const modalSuccessP = document.createElement('p');
+  
+    const modalButtonContainer = document.createElement('div');
+    const modalButton = document.createElement('button');
+  
+    // modal dialog
+    modalDialog.classList.add('bill4Pay-dialog-success');
+  
+    // // close button
+    modalClose.id = `bill4Pay-${currency}-close`;
+    modalClose.classList.add('bill4Pay-close');
+    modalDialog.appendChild(modalClose);
+  
+    // // currency
+    modalCurrency.classList.add('bill4Pay-currency', currency);
+    modalDialog.appendChild(modalCurrency);
+  
+    // success
+    modalSuccess.classList.add('bill4Pay-success');
+    modalSuccessTitle.textContent = chooseLang[lang].successTitle;
+    modalSuccessP.textContent = chooseLang[lang].successText;
+    modalSuccess.appendChild(modalSuccessTitle);
+    modalSuccess.appendChild(modalSuccessP);
+    modalDialog.appendChild(modalSuccess);
+  
+    // button
+    modalButtonContainer.classList.add('bill4Pay-button');
+    modalButton.type = 'button'; 
+    modalButton.classList.add('bill4Pay-button__pay', 'bill4Pay-button__close');
+    modalButton.textContent = chooseLang[lang].closeButton;
+    modalButtonContainer.appendChild(modalButton);
+    modalDialog.appendChild(modalButtonContainer);
+  } 
 }
 
 export { renderButton, renderModal, renderModalSuccess };
