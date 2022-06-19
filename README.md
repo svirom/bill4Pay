@@ -1,6 +1,6 @@
 # 📦 Bill4Pay
 
-Popup App.
+Popup App. Popup for displaying data of cryptocurrency payment.
 
 ## Author
 
