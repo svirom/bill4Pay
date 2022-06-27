@@ -1,5 +1,5 @@
 // import { chooseLang } from '@/js/lang';
-import { fontAdd } from '@/js/font-add';
+import { linkAdd } from '@/js/link-add';
 import { copyToClipboard } from '@/js/clipboard';
 import { modalAction } from '@/js/modal-action';
 import { getBillData } from '@/js/requests';
@@ -19,11 +19,18 @@ const guid = appButton.dataset.appGuid;
 const currency = appButton.dataset.appCurrency;
 const lang = appButton.dataset.appLang;
 const fontLink = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap';
+const stylesLink = 'https://code.bill4pay.com/widget-popup/v1/styles/main.css';
 const appModalId = `bill4Pay-${currency}`;
 
 let clipboards;
 
 // chooseLang[lang] ? appButton.textContent = chooseLang[lang].button : appButton.textContent = chooseLang['en-US'].button;
+
+// add styles link
+document.addEventListener('DOMContentLoaded', () => {
+  linkAdd(fontLink);
+  linkAdd(stylesLink);
+});
 
 renderButton(appButton, currency);
 
@@ -31,6 +38,8 @@ const getData = async () => {
   const data = await getBillData(guid, currency);
   
   if (data) {
+    appButton.style.display = 'block';
+
     data.paid_at ? renderModalSuccess(appModalId, currency, lang, data) : renderModal(appModalId, currency, lang, data);
     getTimer(appModalId, lang, data);
 
@@ -91,8 +100,3 @@ const getData = async () => {
 }
 
 getData();
-
-// add styles link
-document.addEventListener('DOMContentLoaded', () => {
-  fontAdd(fontLink);
-});

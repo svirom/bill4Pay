@@ -1,8 +1,8 @@
-const fontAdd = (fontLink) => {
+const linkAdd = (styleLink) => {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = fontLink;
+  link.href = styleLink;
   document.head.appendChild(link); 
 }
 
-export { fontAdd };
+export { linkAdd };
