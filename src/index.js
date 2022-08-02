@@ -3,7 +3,7 @@ import { linkAdd } from '@/js/link-add';
 import { copyToClipboard } from '@/js/clipboard';
 import { modalAction } from '@/js/modal-action';
 import { getBillData } from '@/js/requests';
-import { renderButton, renderModal, renderModalSuccess } from '@/js/views';
+import { renderButton, renderModal, renderModalSuccess, renderPreloader } from '@/js/views';
 import { getTimer } from '@/js/timer';
 
 // Test import of styles
@@ -21,6 +21,7 @@ const lang = appButton.dataset.appLang;
 const fontLink = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap';
 const stylesLink = 'https://code.bill4pay.com/widget-popup/v1/styles/main.css';
 const appModalId = `bill4Pay-${currency}`;
+const appPreloaderId = `bill4Pay-${currency}-preloader`;
 
 let clipboards;
 
@@ -36,12 +37,13 @@ renderButton(appButton, currency);
 
 const getData = async () => {
   const data = await getBillData(guid, currency);
-  
+
   if (data) {
-    appButton.style.display = 'block';
+    // appButton.style.display = 'block';
 
     data.paid_at ? renderModalSuccess(appModalId, currency, lang, data) : renderModal(appModalId, currency, lang, data);
-    getTimer(appModalId, lang, data);
+    data.paid_at ? '' : getTimer(appModalId, lang, data);
+    // getTimer(appModalId, lang, data);
 
     const modal = document.querySelector(`#${appModalId}`);
 
@@ -99,4 +101,18 @@ const getData = async () => {
   }
 }
 
-getData();
+renderPreloader(appPreloaderId);
+
+appButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  
+  modalAction(appPreloaderId, 'open');
+
+  const receiveData = getData();
+  receiveData.then(() => {
+    modalAction(appModalId, 'open');
+    modalAction(appPreloaderId, 'close');
+  });
+}, { once: true });
+
+// getData();

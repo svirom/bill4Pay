@@ -1,8 +1,8 @@
 .bill4PayButton {
   -webkit-appearance: none;
   appearance: none;
-  /* display: block; */
-  display: none;
+  display: block;
+  /* display: none; */
   min-width: 200px;
   padding: 12px;
   text-decoration: none;
@@ -100,12 +100,12 @@
 
 .bill4Pay .bill4Pay-currency.ethereum,
 .bill4PayButton-ethereum span {
-  background-image: url("../img/ethereum.svg");
+  background-image: url("https://code.bill4pay.com/widget-popup/v1/img/ethereum.svg");
 }
 
 .bill4Pay .bill4Pay-currency.bitcoin,
 .bill4PayButton-bitcoin span {
-  background-image: url("../img/bitcoin.svg");
+  background-image: url("https://code.bill4pay.com/widget-popup/v1/img/bitcoin.svg");
 }
 
 .bill4Pay .bill4Pay-counter__progress {
@@ -277,5 +277,40 @@
     position: absolute;
     bottom: 20px;
     width: calc(100% - 30px);
+  }
+}
+
+.bill4Pay-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bill4Pay-spinner div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.bill4Pay-spinner div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.bill4Pay-spinner div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.bill4Pay-spinner div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

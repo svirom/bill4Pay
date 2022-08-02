@@ -199,4 +199,21 @@ const renderModalSuccess = (id, currency, lang, data) => {
   } 
 }
 
-export { renderButton, renderModal, renderModalSuccess };
+const renderPreloader = (id) => {
+  const preloaderContainer = document.createElement('div');
+  const preloaderDiv = document.createElement('div');
+  const preloaderDiv2 = document.createElement('div');
+  const preloaderDiv3 = document.createElement('div');
+  const preloaderDiv4 = document.createElement('div');
+
+  preloaderContainer.id = id;
+  preloaderContainer.classList.add('bill4Pay', 'bill4Pay-spinner');
+  document.body.appendChild(preloaderContainer);
+
+  preloaderContainer.appendChild(preloaderDiv);
+  preloaderContainer.appendChild(preloaderDiv2);
+  preloaderContainer.appendChild(preloaderDiv3);
+  preloaderContainer.appendChild(preloaderDiv4);
+}
+
+export { renderButton, renderModal, renderModalSuccess, renderPreloader };

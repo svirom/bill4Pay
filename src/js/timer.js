@@ -23,36 +23,43 @@ const getTimer = (id, lang, data) => {
     if (timeRemains < 0) {
       clearInterval(timer);
 
-      const counterText = modal.querySelector('.bill4Pay-counter__text');
+      if (progressCurrent) {
+        const counterText = modal.querySelector('.bill4Pay-counter__text');
 
-      chooseLang[lang] ? lang : lang = 'en-US';
-
-      counterText.classList.add('expired');
-      counterText.textContent = chooseLang[lang].textExpired;
-
-      progressCurrent.style.width = `0%`;
-
-      hours.textContent = '00';
-      minutes.textContent = '00';
-      seconds.textContent = '00';
-    } else {
-
-      progressCurrent.style.width = `${progressWidth.toFixed(2)}%`;
-
-      let hoursRemain = Math.floor(timeRemains / 3600);
-
-      timeRemains = timeRemains - (hoursRemain * 3600);
+        chooseLang[lang] ? lang : lang = 'en-US';
+  
+        counterText.classList.add('expired');
+        counterText.textContent = chooseLang[lang].textExpired;
+  
+        progressCurrent.style.width = `0%`;
+  
+        hours.textContent = '00';
+        minutes.textContent = '00';
+        seconds.textContent = '00';
+      }
       
-      let minutesRemain = Math.floor(timeRemains / 60);
-      let secondsRemain = timeRemains - (minutesRemain * 60);
+    } else {
+      if (progressCurrent) {
+        progressCurrent.style.width = `${progressWidth.toFixed(2)}%`;
 
-      hoursRemain >= 10 ? hoursRemain : hoursRemain = `0${hoursRemain}`;
-      minutesRemain >= 10 ? minutesRemain : minutesRemain = `0${minutesRemain}`;
-      secondsRemain >= 10 ? secondsRemain : secondsRemain = `0${secondsRemain}`;
-
-      hours.textContent = hoursRemain.toString();
-      minutes.textContent = minutesRemain.toString();
-      seconds.textContent = secondsRemain.toString();
+        let hoursRemain = Math.floor(timeRemains / 3600);
+  
+        timeRemains = timeRemains - (hoursRemain * 3600);
+        
+        let minutesRemain = Math.floor(timeRemains / 60);
+        let secondsRemain = timeRemains - (minutesRemain * 60);
+  
+        hoursRemain >= 10 ? hoursRemain : hoursRemain = `0${hoursRemain}`;
+        minutesRemain >= 10 ? minutesRemain : minutesRemain = `0${minutesRemain}`;
+        secondsRemain >= 10 ? secondsRemain : secondsRemain = `0${secondsRemain}`;
+  
+        hours.textContent = hoursRemain.toString();
+        minutes.textContent = minutesRemain.toString();
+        seconds.textContent = secondsRemain.toString();
+      } else {
+        clearInterval(timer);
+      }
+      
     }
   }, 1000);
 };
