@@ -1,5 +1,6 @@
 import { chooseLang } from '@/js/lang';
 import { getInitialTimer } from '@/js/timer';
+import { roundUp } from '@/js/round-up';
 
 const renderButton = (button, currency) => {
   const buttonInner = document.createElement('span');
@@ -111,7 +112,7 @@ const renderModal = (id, currency, lang, data) => {
   // amount
   modalAmount.classList.add('bill4Pay-link', 'bill4Pay-row');
   modalAmountValue.classList.add('bill4Pay-link__value');
-  modalAmountValueSpan.textContent = parseFloat(data.amount) + parseFloat(data.fee_external);
+  modalAmountValueSpan.textContent = roundUp(parseFloat(data.amount) + parseFloat(data.fee_external), 8);
   modalAmountValue.append(modalAmountValueSpan, ' ', data.currency_iso);
   modalAmountCopy.classList.add('bill4Pay-link__clipboard');
   modalAmountCopySpan.textContent = chooseLang[lang].amount;
