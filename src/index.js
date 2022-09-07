@@ -31,6 +31,7 @@ let clipboards;
 document.addEventListener('DOMContentLoaded', () => {
   linkAdd(fontLink);
   linkAdd(stylesLink);
+  appButton.style.display = 'block';
 });
 
 renderButton(appButton, currency);
