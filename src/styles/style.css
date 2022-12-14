@@ -29,7 +29,8 @@
 }
 
 .bill4PayButton-bitcoin span,
-.bill4PayButton-ethereum span {
+.bill4PayButton-ethereum span,
+.bill4PayButton-binance span {
   background-position: left center;
   background-repeat: no-repeat;
   background-size: 32px;
@@ -106,6 +107,11 @@
 .bill4Pay .bill4Pay-currency.bitcoin,
 .bill4PayButton-bitcoin span {
   background-image: url("https://code.bill4pay.com/widget-popup/v1/img/bitcoin.svg");
+}
+
+.bill4Pay .bill4Pay-currency.binance,
+.bill4PayButton-binance span {
+  background-image: url("https://code.bill4pay.com/widget-popup/v1/img/binance.svg");
 }
 
 .bill4Pay .bill4Pay-counter__progress {

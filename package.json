@@ -1,6 +1,6 @@
 {
   "name": "bill4pay",
-  "version": "1.0.0",
+  "version": "1.0.0npm",
   "description": "Cryptocurrency payment button",
   "main": "index.js",
   "author": "svirom",
