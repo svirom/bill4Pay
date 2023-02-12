@@ -14,106 +14,128 @@ if (window.NodeList && !NodeList.prototype.forEach) {
   NodeList.prototype.forEach = Array.prototype.forEach;
 }
 
-const appButton = document.querySelector('#bill4PayButtonBitcoin');
-const guid = appButton.dataset.appGuid;
-const currency = appButton.dataset.appCurrency;
-const lang = appButton.dataset.appLang;
+let buttons = document.querySelectorAll('[data-app-guid]');
+
+const btn = [];
+
+// let btn = buttons.map((button) => button.id);
+buttons.forEach((button) => {
+  btn.push(button.id);
+})
+
+console.log(btn);
+
 const fontLink = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap';
 const stylesLink = 'https://code.bill4pay.com/widget-popup/v1/styles/main.css';
-const appModalId = `bill4Pay-${currency}`;
-const appPreloaderId = `bill4Pay-${currency}-preloader`;
-
-let clipboards;
-
-// chooseLang[lang] ? appButton.textContent = chooseLang[lang].button : appButton.textContent = chooseLang['en-US'].button;
 
 // add styles link
 document.addEventListener('DOMContentLoaded', () => {
   linkAdd(fontLink);
   linkAdd(stylesLink);
-  appButton.style.display = 'block';
 });
 
-renderButton(appButton, currency);
+renderPreloader('bill4Pay-preloader');
 
-const getData = async () => {
-  const data = await getBillData(guid, currency);
+buttons.forEach((elem) => {
 
-  if (data) {
-    // appButton.style.display = 'block';
-
-    data.paid_at ? renderModalSuccess(appModalId, currency, lang, data) : renderModal(appModalId, currency, lang, data);
-    data.paid_at ? '' : getTimer(appModalId, lang, data);
-    // getTimer(appModalId, lang, data);
-
-    const modal = document.querySelector(`#${appModalId}`);
-
-    clipboards = modal.querySelectorAll('.bill4Pay-link__clipboard');
-
-    // copy to clipboard
-    clipboards.forEach((clipboard) => {
-      clipboard.addEventListener('click', (e) => {
-        copyToClipboard(e.target);
-      });
-    })
-
-    // modal image open
-    appButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      modalAction(appModalId, 'open');
-    })
-
-    // modal image close outside
-    document.body.addEventListener('click', (e) => {
-      modalAction(appModalId, 'closeOutside', e);
-
-      if ( (e.target.id === `bill4Pay-${currency}-close`) || (e.target.classList.contains('bill4Pay-button__close')) ) {
-        e.preventDefault();
-        modalAction(appModalId, 'close');
-      }
-    })
-
-    // let i = 0;
-
-    const checkBill = async () => {
-      const checkData = await getBillData(guid, currency);
-      // i++;
-      // console.log('yes', checkData.paid_at, i);
-      return checkData;
-    }
-
-    let checkInterval = setInterval(() => {
-      const getData = checkBill();
-
-      getData.then((result) => {        
-
-        if (result.paid_at) {
-          clearInterval(checkInterval);
-          renderModalSuccess(appModalId, currency, lang, data);
-        }
-
-        // if (i === 2) {
-        //   clearInterval(checkInterval);
-        //   renderModalSuccess(appModalId, currency, lang, data);
-        // }
-      });
-    }, 5000);
-
-  }
-}
-
-renderPreloader(appPreloaderId);
-
-appButton.addEventListener('click', (e) => {
-  e.preventDefault();
+  const appButton = elem;
+  const guid = appButton.dataset.appGuid;
+  const currency = appButton.dataset.appCurrency;
+  const lang = appButton.dataset.appLang;
   
-  modalAction(appPreloaderId, 'open');
+  const appModalId = `bill4Pay-${currency}`;
+  // const appPreloaderId = `bill4Pay-${currency}-preloader`;
 
-  const receiveData = getData();
-  receiveData.then(() => {
-    modalAction(appModalId, 'open');
-    modalAction(appPreloaderId, 'close');
+  let clipboards;
+
+  // add styles link
+  document.addEventListener('DOMContentLoaded', () => {
+    appButton.style.display = 'block';
   });
-}, { once: true });
 
-// getData();
+  renderButton(appButton, currency);
+
+  const getData = async () => {
+    const data = await getBillData(guid, currency);
+  
+    if (data) {
+      // appButton.style.display = 'block';
+  
+      data.paid_at ? renderModalSuccess(appModalId, currency, lang, data) : renderModal(appModalId, currency, lang, data);
+      data.paid_at ? '' : getTimer(appModalId, lang, data);
+      // getTimer(appModalId, lang, data);
+  
+      const modal = document.querySelector(`#${appModalId}`);
+  
+      clipboards = modal.querySelectorAll('.bill4Pay-link__clipboard');
+  
+      // copy to clipboard
+      clipboards.forEach((clipboard) => {
+        clipboard.addEventListener('click', (e) => {
+          copyToClipboard(e.target);
+        });
+      })
+  
+      // modal image open
+      appButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        modalAction(appModalId, 'open');
+      })
+  
+      // modal image close outside
+      document.body.addEventListener('click', (e) => {
+        modalAction(appModalId, 'closeOutside', e);
+  
+        if ( (e.target.id === `bill4Pay-${currency}-close`) || (e.target.classList.contains('bill4Pay-button__close')) ) {
+          e.preventDefault();
+          modalAction(appModalId, 'close');
+        }
+      })
+  
+      // let i = 0;
+  
+      const checkBill = async () => {
+        const checkData = await getBillData(guid, currency);
+        // i++;
+        // console.log('yes', checkData.paid_at, i);
+        return checkData;
+      }
+  
+      let checkInterval = setInterval(() => {
+        const getData = checkBill();
+  
+        getData.then((result) => {        
+  
+          if (result.paid_at) {
+            clearInterval(checkInterval);
+            renderModalSuccess(appModalId, currency, lang, data);
+          }
+  
+          // if (i === 2) {
+          //   clearInterval(checkInterval);
+          //   renderModalSuccess(appModalId, currency, lang, data);
+          // }
+        });
+      }, 5000);
+  
+    }
+  }
+
+  
+  // renderPreloader(appPreloaderId);
+
+  appButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    
+    // modalAction(appPreloaderId, 'open');
+    modalAction('bill4Pay-preloader', 'open');
+  
+    const receiveData = getData();
+    receiveData.then(() => {
+      modalAction(appModalId, 'open');
+      // modalAction(appPreloaderId, 'close');
+      modalAction('bill4Pay-preloader', 'close');
+    });
+  }, { once: true });
+
+})
