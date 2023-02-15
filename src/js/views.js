@@ -2,11 +2,11 @@ import { chooseLang } from '@/js/lang';
 import { getInitialTimer } from '@/js/timer';
 import { roundUp } from '@/js/round-up';
 
-const renderButton = (button, currency) => {
+const renderButton = (button, currency, btnText) => {
   const buttonInner = document.createElement('span');
 
   button.classList.add('bill4PayButton', `bill4PayButton-${currency}`);
-  buttonInner.textContent = currency;
+  buttonInner.textContent = `${btnText} ${currency}`;
   button.appendChild(buttonInner);
 }
 

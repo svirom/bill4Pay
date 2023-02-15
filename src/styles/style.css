@@ -1,41 +1,3 @@
-.bill4PayButton {
-  -webkit-appearance: none;
-  appearance: none;
-  display: block;
-  /* display: none; */
-  min-width: 200px;
-  padding: 12px;
-  text-decoration: none;
-  text-transform: capitalize;
-  border: 0;
-  border-radius: 8px;
-  background-color: #000000;
-  cursor: pointer;
-}
-
-.bill4PayButton:hover {
-  background-color: #3c4043;
-}
-
-.bill4PayButton span {
-  display: inline-block;
-  height: 32px;
-  padding-left: 40px;
-  font-family: 'Inter', sans-serif;
-  font-size: 18px;
-  line-height: 32px;
-  font-weight: 700;
-  color: #ffffff;
-}
-
-.bill4PayButton-bitcoin span,
-.bill4PayButton-ethereum span,
-.bill4PayButton-binance span {
-  background-position: left center;
-  background-repeat: no-repeat;
-  background-size: 32px;
-}
-
 .bill4Pay * {
   box-sizing: border-box;
 }
@@ -84,6 +46,78 @@
   background: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.66675 8.66675L23.3334 23.3334' stroke='%23172A3A' stroke-width='2' stroke-miterlimit='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M23.3334 8.66675L8.66675 23.3334' stroke='%23172A3A' stroke-width='2' stroke-miterlimit='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center no-repeat;
 }
 
+.bill4Pay .bill4Pay-title h3 {
+  margin-top: 0;
+  margin-bottom: 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #000000;
+}
+
+.bill4PayButton {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: 24px 12px;
+  text-decoration: none;
+  text-transform: capitalize;
+  border: 2px solid #EDEDED;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  -webkit-transition: all 0.15s ease;
+  transition: all 0.15s ease;
+}
+
+.bill4PayButton.bill4PayButton-main {
+  width: auto;
+  min-width: 220px;
+  padding: 12px;
+  border: 0;
+  border-radius: 8px;
+  background-color: #000000;
+}
+
+.bill4PayButton span {
+  display: inline-block;
+  height: 32px;
+  padding-left: 40px;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 700;
+  color: #0E0625;
+}
+
+.bill4PayButton.bill4PayButton-main span {
+  color: #ffffff;
+}
+
+.bill4PayButton:hover {
+  border-color: #0E0625;
+  background-color: #0E0625;
+}
+
+.bill4PayButton:hover span {
+  color: #ffffff;
+}
+
+.bill4PayButton-main span,
+.bill4PayButton-bitcoin span,
+.bill4PayButton-ethereum span,
+.bill4PayButton-binance span {
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 32px;
+}
+
+.bill4Pay .bill4PayButton + .bill4PayButton {
+  margin-top: 16px;
+}
+
 .bill4Pay .bill4Pay-row {
   margin-bottom: 32px;
 }
@@ -97,6 +131,10 @@
   margin-bottom: 30px;
   background-position: center top;
   background-repeat: no-repeat;
+}
+
+.bill4PayButton-main span {
+  background-image: url("https://code.bill4pay.com/widget-popup/v1/img/main.svg");
 }
 
 .bill4Pay .bill4Pay-currency.ethereum,
@@ -271,6 +309,10 @@
   .bill4Pay .bill4Pay-close {
     right: 18px;
     top: 18px;
+  }
+
+  .bill4Pay .bill4Pay-title {
+    padding-top: 42px;
   }
 
   .bill4Pay .bill4Pay-dialog.bill4Pay-dialog-success {
