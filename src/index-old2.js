@@ -3,7 +3,7 @@ import { linkAdd } from '@/js/link-add';
 import { copyToClipboard } from '@/js/clipboard';
 import { modalAction } from '@/js/modal-action';
 import { getBillData } from '@/js/requests';
-import { renderMainModal, renderPaymentButton, renderModal, renderModalSuccess, renderPreloader } from '@/js/views';
+import { renderButton, renderModal, renderModalSuccess, renderPreloader } from '@/js/views';
 import { getTimer } from '@/js/timer';
 
 // Test import of styles
@@ -14,18 +14,18 @@ if (window.NodeList && !NodeList.prototype.forEach) {
   NodeList.prototype.forEach = Array.prototype.forEach;
 }
 
+let buttons = document.querySelectorAll('[data-app-guid]');
+
+const btn = [];
 const mainButton = document.querySelector('#bill4PayButton');
 const mainModalId = 'bill4Pay-modal';
 const appPreloaderId = 'bill4Pay-preloader';
 
-let currencies = mainButton.dataset.appCurrency;
-const guid = mainButton.dataset.appGuid;
-const lang = mainButton.dataset.appLang;
-
-currencies = currencies.split(',').map(currency => currency.trim());
-
 const fontLink = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap';
 const stylesLink = 'https://code.bill4pay.com/widget-popup/v2/styles/main.css';
+
+// buttons ids array
+buttons.forEach((button) => btn.push(button.id));
 
 // add styles link
 document.addEventListener('DOMContentLoaded', () => {
@@ -38,16 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   mainButton.style.display = 'block';
 });
 
-// render main modal
-renderMainModal(mainModalId, lang);
-
-// render preloader
 renderPreloader(appPreloaderId);
-
-// render payment buttons
-currencies.forEach(currency => {
-  renderPaymentButton(currency, lang);
-});
 
 // main modal open
 mainButton.addEventListener('click', (e) => {
@@ -59,27 +50,41 @@ mainButton.addEventListener('click', (e) => {
 document.body.addEventListener('click', (e) => {
   modalAction(mainModalId, 'closeOutside', e);
 
-  if (e.target.id === 'bill4Pay-modal-close') {
+  if (e.target.id === `bill4Pay-modal-close`) {
     e.preventDefault();
     modalAction(mainModalId, 'close');
   }
 })
 
-let buttons = document.querySelectorAll('#bill4Pay-modal [data-app-currency]');
-
 // make buttons logic
 buttons.forEach((elem) => {
+
   const appButton = elem;
-  const currency = appButton.dataset.appCurrency;  
+  const guid = appButton.dataset.appGuid;
+  const currency = appButton.dataset.appCurrency;
+  const lang = appButton.dataset.appLang;
+  const btnText = appButton.dataset.appBtntext;
+  
   const appModalId = `bill4Pay-${currency}`;
+  // const appPreloaderId = `bill4Pay-${currency}-preloader`;
+
   let clipboards;
+
+  // document.addEventListener('DOMContentLoaded', () => {
+  //   appButton.style.display = 'block';
+  // });
+
+  renderButton(appButton, currency, btnText);
 
   const getData = async () => {
     const data = await getBillData(guid, currency);
-
-    if (data) {  
+  
+    if (data) {
+      // appButton.style.display = 'block';
+  
       data.paid_at ? renderModalSuccess(appModalId, currency, lang, data) : renderModal(appModalId, currency, lang, data);
       data.paid_at ? '' : getTimer(appModalId, lang, data);
+      // getTimer(appModalId, lang, data);
   
       const modal = document.querySelector(`#${appModalId}`);
   
@@ -140,16 +145,20 @@ buttons.forEach((elem) => {
     }
   }
 
+  
+  // renderPreloader(appPreloaderId);
+
   appButton.addEventListener('click', (e) => {
     e.preventDefault();
-
+    
+    // modalAction(appPreloaderId, 'open');
     modalAction(appPreloaderId, 'open');
   
     const receiveData = getData();
-
     receiveData.then(() => {
       modalAction(mainModalId, 'close');
       modalAction(appModalId, 'open');
+      // modalAction(appPreloaderId, 'close');
       modalAction(appPreloaderId, 'close');
     });
   }, { once: true });

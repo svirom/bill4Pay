@@ -2,12 +2,52 @@ import { chooseLang } from '@/js/lang';
 import { getInitialTimer } from '@/js/timer';
 import { roundUp } from '@/js/round-up';
 
-const renderButton = (button, currency, btnText) => {
-  const buttonInner = document.createElement('span');
+const renderMainModal = (id, lang) => {
+  chooseLang[lang] ? lang : lang = 'en-US';
 
-  button.classList.add('bill4PayButton', `bill4PayButton-${currency}`);
-  buttonInner.textContent = `${btnText} ${currency}`;
-  button.appendChild(buttonInner);
+  const modalContainer = document.createElement('div');
+  const modalDialog = document.createElement('div');
+  const modalClose = document.createElement('div');
+  const modalTitleContainer = document.createElement('div');
+  const modalTitle = document.createElement('h3');
+  const modalMethods = document.createElement('div');
+
+  modalContainer.id = id;
+  modalContainer.classList.add('bill4Pay');
+  document.body.appendChild(modalContainer);
+
+  modalDialog.classList.add('bill4Pay-dialog');
+  modalContainer.appendChild(modalDialog);
+
+  // close button
+  modalClose.id = 'bill4Pay-modal-close';
+  modalClose.classList.add('bill4Pay-close');
+  modalDialog.appendChild(modalClose);
+
+  // title
+  modalTitleContainer.classList.add('bill4Pay-title');
+  modalTitle.textContent = chooseLang[lang].mainTitle;
+  modalTitleContainer.appendChild(modalTitle);
+  modalDialog.appendChild(modalTitleContainer);
+
+  // methods
+  modalMethods.classList.add('bill4Pay-methods');
+  modalDialog.appendChild(modalMethods);
+}
+
+const renderPaymentButton = (currency, lang) => {
+  chooseLang[lang] ? lang : lang = 'en-US';
+
+  const buttonTag = document.createElement('button');
+  const buttonInner = document.createElement('span');
+  const currencyCapitalized = currency.charAt(0).toUpperCase() + currency.slice(1);
+
+  buttonTag.id = `bill4PayButton${currencyCapitalized}`;
+  buttonTag.classList.add('bill4PayButton', `bill4PayButton-${currency}`);
+  buttonTag.setAttribute('data-app-currency', currency);
+  buttonInner.textContent = `${chooseLang[lang].paymentButton} ${currency}`;
+  buttonTag.appendChild(buttonInner);
+  document.querySelector('#bill4Pay-modal .bill4Pay-methods').appendChild(buttonTag);
 }
 
 const renderModal = (id, currency, lang, data) => {
@@ -217,4 +257,4 @@ const renderPreloader = (id) => {
   preloaderContainer.appendChild(preloaderDiv4);
 }
 
-export { renderButton, renderModal, renderModalSuccess, renderPreloader };
+export { renderMainModal, renderPaymentButton, renderModal, renderModalSuccess, renderPreloader };

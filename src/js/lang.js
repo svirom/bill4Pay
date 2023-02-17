@@ -1,6 +1,7 @@
 const chooseLang = {
   'uk-UA' : {
-    // 'button': 'Криптовалюта',
+    'mainTitle': 'Оберіть валюту оплати',
+    'paymentButton': 'Сплатити',
     'text': 'Посилання доступне до оплати',
     'textExpired': 'Строк дії посилання закінчився',
     'address': 'Копіювати адресу',
@@ -11,7 +12,8 @@ const chooseLang = {
     'closeButton': 'Закрити вікно',
   },
   'ru-RU': {
-    // 'button': 'Криптовалюта',
+    'mainTitle': 'Выберите валюту оплаты',
+    'paymentButton': 'Оплатить',
     'text': 'Ссылка доступна к оплате',
     'textExpired': 'Срок действия ссылки истек',
     'address': 'Копировать адрес',
@@ -22,7 +24,8 @@ const chooseLang = {
     'closeButton': 'Закрыть окно',
   },
   'en-US': {
-    // 'button': 'Cryprocurrency',
+    'mainTitle': 'Choose payment currency',
+    'paymentButton': 'Pay',
     'text': 'Link available for payment',
     'textExpired': 'Link expired',
     'address': 'Copy address',
