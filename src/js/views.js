@@ -152,6 +152,9 @@ const renderModal = (id, currency, lang, data) => {
   // amount
   modalAmount.classList.add('bill4Pay-link', 'bill4Pay-row');
   modalAmountValue.classList.add('bill4Pay-link__value');
+  // modalAmountValueSpan.textContent = roundUp(parseFloat(data.amount) + parseFloat(data.fee_external), 8);
+  data.amount = data.amount / Math.pow(10, data.currency_scale);
+  data['fee_external'] = data.fee_external / Math.pow(10, data.currency_scale);
   modalAmountValueSpan.textContent = roundUp(parseFloat(data.amount) + parseFloat(data.fee_external), 8);
   modalAmountValue.append(modalAmountValueSpan, ' ', data.currency_iso);
   modalAmountCopy.classList.add('bill4Pay-link__clipboard');

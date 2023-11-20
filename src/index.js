@@ -25,7 +25,7 @@ const lang = mainButton.dataset.appLang;
 currencies = currencies.split(',').map(currency => currency.trim());
 
 const fontLink = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap';
-const stylesLink = 'https://code.bill4pay.com/widget-popup/v2/styles/main.css';
+const stylesLink = 'https://code.cryptoprocessingcenter.com/widget-popup/v1/styles/main.css';
 
 // add styles link
 document.addEventListener('DOMContentLoaded', () => {
